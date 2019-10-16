@@ -5,8 +5,6 @@ namespace PizzaBox.Domain.Recipes
 {
   public class Chicago : APizzaMaker
   {
-    //public static string Size;
-    public static string Size_Final;
 
     public override List<AComponent> Make(Size SizeMake, List<Topping> ToppingMake) 
     {
@@ -15,6 +13,11 @@ namespace PizzaBox.Domain.Recipes
         Components.Add(SizeMake);
         Components.AddRange(ToppingMake);
         return this.Components;
+    }
+
+     public override string ToString()
+    {
+      return "Chicago Pizza";
     }
   }
 }

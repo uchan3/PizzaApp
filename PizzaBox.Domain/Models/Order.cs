@@ -66,7 +66,7 @@ namespace PizzaBox.Domain.Models
              
              //Make pizza!
              NewYork NY1 = new NewYork();
-             PizzaTemporary = NY1.Make(SizeMake, TInput);
+             //PizzaTemporary = NY1.Make(SizeMake, TInput);
              string NewYorkS = NY1.ToString();
              //var List = MakeNewYork(SizeMake, TInput); 
              //MakeNewYork1();
