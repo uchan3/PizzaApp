@@ -4,6 +4,8 @@ using PizzaBox.Domain.Models;
 using PizzaBox.Domain.Ingredients;
 using PizzaBox.Domain.Recipes;
 using System.Linq;
+using System.Reflection;
+using PizzaBox.Domain.Application;
 
 namespace PizzaBox.Client
 {
@@ -11,47 +13,36 @@ namespace PizzaBox.Client
     {
         static void Main(string[] args)
         {
-     
-            var NewYork = new NewYork();
-            Size NewYorkSize = new Size("Small");
-            List<Topping> NewYorkTopping  = new List<Topping> ();
-            NewYorkTopping.Add(new Topping("Cheese"));
-            NewYorkTopping.Add(new Topping("Ham"));
-            var NYStuff = NewYork.Make(NewYorkSize, NewYorkTopping);
-
-            var Chicago  = new Chicago();
-            Size ChicagoSize = new Size("Large");
-            List<Topping> ChicagoTopping  = new List<Topping> ();
-            ChicagoTopping.Add(new Topping("Pepperoni"));
-            ChicagoTopping.Add(new Topping("Green Bell"));
-            var ChicagoStuff = Chicago.Make(ChicagoSize, ChicagoTopping);
-
-            Dictionary<string, List<AComponent>> PizzaTable = new Dictionary<string, List<AComponent>>();
-            PizzaTable.Add(NewYork.ToString(), NYStuff);
-            PizzaTable.Add(Chicago.ToString(), ChicagoStuff);
-
-            foreach(var PizzaKey in PizzaTable.Keys)
-            {
-              Console.WriteLine(PizzaKey); //First disply the name of the pizza. 
-              foreach(var PizzaItem in PizzaTable.GetValueOrDefault(PizzaKey)) //Get values based on specific key.
-              {
-                Console.WriteLine(PizzaItem.ToString());
-              }
-            }
+            Application RunPizzaApp = new Application();
+            Order1 CustomerOrder = RunPizzaApp.CreateOrder();
+            RunPizzaApp.ViewOrder(CustomerOrder);
+            //TODO: Reflection to get list of classes in namespace.
             
-            // ***This is the workking code***
-            // List<Topping> TopTemp = new List<Topping>() {new Topping("Ham"), new Topping("Pepperoni")};
-            // Size Sizey = new Size("Small");
+            // Type NYPizza = typeof(NewYork);
+            // object NYInstance = Activator.CreateInstance(NYPizza);
+            // MethodInfo createNYPizza = NYPizza.GetMethod("Make");
 
-            // var NY1 = MakeNewYork(Sizey, TopTemp);
-            // OrderList.PizzaName.Add(MakeNewYork1());
-            // PizzaTemp.AddRange(NY1);
-            
-            // Console.WriteLine(OrderList.PizzaName[0]);
-            // foreach (var comp in PizzaTemp)
-            //  {
-            //    Console.WriteLine(comp.ToString());
-            //  } ***End of the working code***
+            // TEST
+            // NewYork NewYork1 = new NewYork();
+            // Size NewYorkSize = new Size("Small");
+            // List<Topping> NewYorkTopping  = new List<Topping> ();
+            // NewYorkTopping.Add(new Topping("Cheese"));
+            // NewYorkTopping.Add(new Topping("Ham"));
+            // var NYStuff = NewYork1.Make(NewYorkSize, NewYorkTopping);
+
+            // var NYReflect = createNYPizza.Invoke(NYInstance, new object[] {NewYorkSize, NewYorkTopping})
+
+            // Logic to use reflection.
+            // Order1 ReflectionOrder = new Order1();
+            // ReflectionOrder.PizzaTable.Add(NYPizza.Name, NYReflect as List<AComponent>);
+            // foreach (var KeyReflect in ReflectionOrder.PizzaTable.Keys)
+            // {
+            //     Console.WriteLine(KeyReflect);
+            //     foreach (var ItemPizza in ReflectionOrder.PizzaTable.GetValueOrDefault(KeyReflect))
+            //     {
+            //         Console.WriteLine(ItemPizza.ToString());
+            //     }
+            // }
 
         } 
     }
