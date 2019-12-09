@@ -19,5 +19,10 @@ namespace PizzaBox.Domain.Recipes
     {
       return "Chicago Pizza";
     }
+
+    public Chicago()
+    {
+      Price = 6.00M;
+    }
   }
 }

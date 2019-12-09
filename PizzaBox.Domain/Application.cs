@@ -37,29 +37,62 @@ namespace PizzaBox.Domain.Application
         MethodInfo CreatePizza = PizzaType.GetMethod("Make");
         var PizzaReflect = CreatePizza.Invoke(PizzaInstance, new object[] {SizeInput, ToppingInput});
 
-        //Add the pizza to dictionary. 
-        UserOrder.PizzaTable.Add(PizzaType.Name, PizzaReflect as List<AComponent>);
+        //Ask for the price and quantity information. 
+        Console.WriteLine("The cost of {0} is {1}.", PizzaType.Name, PizzaInstance.GetType().GetProperty("Price").GetValue(PizzaInstance)); 
+        Console.WriteLine("How many of {0} would you like?", PizzaType.Name); 
+        
+        string pizzaCount = Console.ReadLine(); 
+        var pizzaPrice = Int32.Parse(pizzaCount) * Decimal.Parse(PizzaInstance.GetType().GetProperty("Price").GetValue(PizzaInstance).ToString()); 
+        //Add the pizza info to dictionary, # of pizzas, and price to the arrays. 
 
-        Console.WriteLine("Would you like to add another pizza?\n" + 
-        "Enter <Add> to add another pizza. Else, press <Finish> to complete the order.");
-        string UserResponse = Console.ReadLine();
-        if(UserResponse=="Finish")
+        UserOrder.PizzaTable.Add(PizzaType.Name, PizzaReflect as List<AComponent>);
+        UserOrder.LimitArray.Add(Int32.Parse(pizzaCount));
+        UserOrder.PriceArray.Add(pizzaPrice); 
+        
+        var addDecision = ValidateOrderCountandPrice(UserOrder);
+        if (addDecision == "Maximum number reached.")
         {
-          break;
-        }
+          break; 
+        } 
+        else
+        {
+          Console.WriteLine("Would you like to add another pizza?\n" + 
+          "Enter <Add> to add another pizza. Else, press <Finish> to complete the order.");
+          string UserResponse = Console.ReadLine();
+          if(UserResponse=="Finish")
+          {
+            break;
+          }
+        }  
       }
       return UserOrder;        
     }
     
+    //TODO: Validate quantity and price. Then, make the decision. 
+    public string ValidateOrderCountandPrice(Order1 OrderInProgress)
+    {
+      if (OrderInProgress.LimitArray.Sum() > OrderInProgress.LimitCount || 
+      OrderInProgress.PriceArray.Sum() > OrderInProgress.LimitPrice)
+      {
+        return "Maximum number reached.";
+      }
+      else
+      {
+        return "You can still order more pizzas!"; 
+      }
+    }
     public void ViewOrder(Order1 FinalizedOrder)
     {
       foreach (var PizzaKey in FinalizedOrder.PizzaTable.Keys)
       {
-        Console.WriteLine($"You orderered a {PizzaKey} with the following components:\n");
+        Console.WriteLine($"You orderered a {PizzaKey} pizza.");
+        Console.WriteLine("The number of pizzas you ordered is {0}. ", FinalizedOrder.LimitArray.Sum()); 
+        Console.WriteLine("The following components include :\n"); 
         foreach(var PizzaComponent in FinalizedOrder.PizzaTable[PizzaKey])
         {
           Console.WriteLine(PizzaComponent.ToString());
         }
+        Console.WriteLine("The total price is {0}", FinalizedOrder.PriceArray.Sum()); 
       }
     }
     //Temporary Fix. 
@@ -99,9 +132,21 @@ namespace PizzaBox.Domain.Application
           string Response = Console.ReadLine();
           if(Response=="Y")
           {
-            continue; //Continue to next iteration.
+            //Validate number of toppings. 
+            int ToppingCount = TempTopping.Count;
+            if(ToppingCount == 1)
+            {
+              Console.WriteLine("You must select at least one more topping.");
+              continue;
+            }
+            else if (ToppingCount == 5)
+            {
+              Console.WriteLine("You have reached the maximum number of toppings.");
+              break;
+            }
+            //continue; //Continue to next iteration.
           }
-          else if(Response=="N")
+          else
           {
             break;
           }

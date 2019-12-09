@@ -7,12 +7,10 @@ namespace PizzaBox.Domain.Ingredients
   {
     private List<AComponent> _components = new List<AComponent>(); 
 
+    public decimal Price {get; set;} 
     public List<AComponent> Components
     {
-       get
-       {
-         return _components; 
-       }
+       get{return _components;}
     }
 
     public abstract List<AComponent> Make(Size SizeInput, List<Topping> ToppingChoice); 

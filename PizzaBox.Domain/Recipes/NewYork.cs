@@ -20,5 +20,10 @@ namespace PizzaBox.Domain.Recipes
     {
       return "New York Pizza";
     }
+
+    public NewYork()
+    {
+      Price = 5.00M; //TODO: Consider whether this is a good place to put in the price. 
+    }
   }
 }
