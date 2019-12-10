@@ -7,7 +7,7 @@ namespace PizzaBox.Domain.Models
   {
     public Address Address {get; set;}
     public Dictionary <string, int> Inventory {get; set;} 
-    public List<Order> OrderHistory {get; set;}
+    public List<Order1> OrderHistory {get; set;}
     
     private List<User> _userList = new List<User>(); //Location views its own list of users. 
 

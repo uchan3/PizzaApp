@@ -15,8 +15,6 @@ namespace PizzaBox.Domain.Ingredients
       }
     }
 
-    //public abstract List<AComponent> Make(Size SizeInput, Crust CrustInput); 
-
     public abstract List<AComponent> Make(Size SizeInput, Crust CrustInput, List<Topping> ToppingChoice); 
 
    /*  public APizzaMaker()
