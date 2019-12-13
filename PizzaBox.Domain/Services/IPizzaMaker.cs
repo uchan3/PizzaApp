@@ -6,7 +6,7 @@ namespace PizzaBox.Domain.Services
 {
     public interface IPizzaMaker
     {
-      Order1 CreateOrder();
+      Order CreateOrder();
 
       Size SelectSize();
       List<Topping> SelectTopping();

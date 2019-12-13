@@ -11,11 +11,11 @@ namespace PizzaBox.Domain.Application
 {
   public class Application: IPizzaMaker
   {
-    public Order1 CreateOrder()
+    public Order CreateOrder()
     {
       Console.WriteLine("Welcome. Let's create an order. Type <Add> if you want to add more pizzas.\n" + 
       "Type <Finish> when you are doing with your order.");
-      Order1 UserOrder = new Order1();
+      Order UserOrder = new Order();
       
       string OrderInput = Console.ReadLine();
       while(OrderInput=="Add") //Keep adding pizzas until user is done with the order.
@@ -69,7 +69,7 @@ namespace PizzaBox.Domain.Application
     }
     
     //TODO: Validate quantity and price. Then, make the decision. 
-    public string ValidateOrderCountandPrice(Order1 OrderInProgress)
+    public string ValidateOrderCountandPrice(Order OrderInProgress)
     {
       if (OrderInProgress.LimitArray.Sum() > OrderInProgress.LimitCount || 
       OrderInProgress.PriceArray.Sum() > OrderInProgress.LimitPrice)
@@ -81,7 +81,7 @@ namespace PizzaBox.Domain.Application
         return "You can still order more pizzas!"; 
       }
     }
-    public void ViewOrder(Order1 FinalizedOrder)
+    public void ViewOrder(Order FinalizedOrder)
     {
       foreach (var PizzaKey in FinalizedOrder.PizzaTable.Keys)
       {

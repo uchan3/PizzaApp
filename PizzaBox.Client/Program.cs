@@ -14,7 +14,7 @@ namespace PizzaBox.Client
         static void Main(string[] args)
         {
             Application RunPizzaApp = new Application();
-            Order1 CustomerOrder = RunPizzaApp.CreateOrder();
+            Order CustomerOrder = RunPizzaApp.CreateOrder();
             RunPizzaApp.ViewOrder(CustomerOrder);
             //TODO: Reflection to get list of classes in namespace.
             
