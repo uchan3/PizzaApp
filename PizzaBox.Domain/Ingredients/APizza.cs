@@ -8,7 +8,7 @@ namespace PizzaBox.Domain.Ingredients
   {
     //Must have features: 
     public string Name { get; set; }
-    public Crust PizzaCrust {get; set;}
+    //public Crust PizzaCrust {get; set;}
     public decimal Price { get; set; }
 
   }

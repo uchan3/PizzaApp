@@ -4,8 +4,7 @@ using PizzaBox.Domain.Models;
 using PizzaBox.Domain.Ingredients;
 using PizzaBox.Domain.Recipes;
 using System.Linq;
-using System.Reflection;
-using PizzaBox.Domain.Application;
+using PizzaBox.Client.Sessions;
 
 namespace PizzaBox.Client
 {
@@ -13,9 +12,15 @@ namespace PizzaBox.Client
     {
         static void Main(string[] args)
         {
-            Application RunPizzaApp = new Application();
-            Order CustomerOrder = RunPizzaApp.CreateOrder();
-            RunPizzaApp.ViewOrder(CustomerOrder);
+            //Application RunPizzaApp = new Application();
+            //Order CustomerOrder = RunPizzaApp.CreateOrder();
+            //RunPizzaApp.ViewOrder(CustomerOrder);
+            
+            ApplicationDB RunPizzaDBApp = new ApplicationDB(); 
+            //RunPizzaDBApp.CreateOrder(); 
+            //RunPizzaDBApp.ViewIngredients(); 
+            RunPizzaDBApp.ViewOrder(); 
+            
             //TODO: Reflection to get list of classes in namespace.
             
             // Type NYPizza = typeof(NewYork);

@@ -12,6 +12,12 @@ namespace Pizza.Data
     //Customer must select these options. 
     public Size PizzaSize {get; set; }
     public List<Topping> PizzaTopping {get; set;}
+
+    public Crust PizzaCrust {get; set;}
     public int Quantity {get; set;}
+
+    public PizzaEntity() {
+      PizzaTopping = new List<Topping>(); 
+    }
   }
 }

@@ -7,7 +7,7 @@ using PizzaBox.Domain.Recipes;
 using System.Linq;
 using System.Reflection;
 
-namespace PizzaBox.Domain.Application
+namespace PizzaBox.Client.Sessions
 {
   public class Application: IPizzaMaker
   {
