@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Pizza.Data;
 using PizzaBox.Domain.Models;
 
@@ -11,8 +12,17 @@ namespace PizzaBox.Data
     [Key]
     public int OrderID {get; set;} //TODO: Refactor with GUID in future. 
     //public List<PizzaEntity> PizzaList {get; set;}
+
+    public int PizzaID {get; set;}
+    [ForeignKey("PizzaID")]
     public List<PizzaEntity> PizzaList {get; set;}
+    
+    public int UserID {get; set;}
+    [ForeignKey("UserID")]
     public User UserInfo {get; set;}
+
+    public int LocationID {get; set;}
+    [ForeignKey("LocationID")]
     public Location LocationIdentifier {get; set;}
     public DateTime OrderDate {get; set;}
 
