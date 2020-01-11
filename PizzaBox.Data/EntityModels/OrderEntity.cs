@@ -13,8 +13,8 @@ namespace PizzaBox.Data
     public int OrderID {get; set;} //TODO: Refactor with GUID in future. 
     //public List<PizzaEntity> PizzaList {get; set;}
 
-    public int PizzaID {get; set;}
-    [ForeignKey("PizzaID")]
+    //public int PizzaID {get; set;}
+    //[ForeignKey("PizzaID")]
     public List<PizzaEntity> PizzaList {get; set;}
     
     public int UserID {get; set;}

@@ -69,42 +69,52 @@ namespace PizzaBox.Client.Sessions
       //Ensure order information is persisting. 
       Console.WriteLine("Retrieve the most recent order submitted.\n"); 
 
-      var countOrder = _db.OrderList.Count(); //Works. Knows there are a total of 4 orders. 
+      var countOrder = _db.OrderList.Count(); //Testing-->Works.
       Console.WriteLine("There are a total of " + countOrder + " orders."); 
-      //OrderEntity LastOrder = _db.OrderList.FirstOrDefault( l => l.LocationIdentifier.LocationID == 2); 
       
-      //TODO: Ensure the column names match\\
-      foreach (var order in _db.OrderList)
+      OrderEntity LastOrder = _db.OrderList.LastOrDefault(); 
+      
+      //Load the related information in order. (Explicit loading)
+      _db.Entry(LastOrder).Reference( o => o.UserInfo).Load(); 
+      _db.Entry(LastOrder).Reference( o => o.LocationIdentifier).Load(); 
+      _db.Entry(LastOrder).Collection( o => o.PizzaList).Load(); 
+
+      //Load the related information in pizza list related to the order. 
+      foreach( var pizza in LastOrder.PizzaList)
       {
-          Console.WriteLine("The order date is " + order.OrderDate); 
+        //_db.Entry(pizza).Reference( p => p.Name); 
+        _db.Entry(pizza).Reference( p => p.PizzaSize).Load(); 
+        _db.Entry(pizza).Reference( p => p.PizzaCrust).Load(); 
+        _db.Entry(pizza).Collection( p => p.PizzaTopping).Load(); 
       }
-      //string UserName = LastOrder.UserInfo.FirstName; 
-      //Console.WriteLine("The order has been placed by: " + UserName);
-      //Console.WriteLine($"The order was submitted to : {ViewOrder.LocationIdentifier.Street}.\n"); 
-      //Console.WriteLine($"The order was submitted at : {ViewOrder.OrderDate}.\n"); 
 
-      // foreach (var PizzaChoice in ViewOrder.PizzaList)
-      // {
-      //     Console.WriteLine($"The pizza selected is {PizzaChoice.Name}" + 
-      //     "with the following components: \n");
-      //     Console.WriteLine($"Size: {PizzaChoice.PizzaSize.Name}"); 
-      //     Console.WriteLine($"Crust: {PizzaChoice.PizzaCrust.Name}"); 
-      //     foreach (var ToppingChoice in PizzaChoice.PizzaTopping) 
-      //     {
-      //       Console.WriteLine($"Topping: {ToppingChoice.Name}"); 
-      //     }
-      //     Console.WriteLine("--------------------------------"); 
-      //     Console.WriteLine($"The cost of the pizza you selected is: {PizzaChoice.Price}"); 
-      //     Console.WriteLine($"The quantity of pizzas you selected is: {PizzaChoice.Quantity}"); 
-      // }
-      
-      // var totalQuantity = ViewOrder.PizzaList.Sum( q => q.Quantity); 
-      // Console.WriteLine("The total quantity is: " + totalQuantity); 
+      Console.WriteLine("The order has been placed by: " + LastOrder.UserInfo.FirstName + 
+      " " + LastOrder.UserInfo.LastName);
+      Console.WriteLine($"The order was submitted to : {LastOrder.LocationIdentifier.Street}.\n"); 
+      Console.WriteLine($"The order was submitted at : {LastOrder.OrderDate}.\n"); 
 
-      // var totalCost = (from pizza in ViewOrder.PizzaList
-      //                 select pizza.Quantity*pizza.Price).Sum();
+      foreach (var PizzaChoice in LastOrder.PizzaList)
+      {
+          Console.WriteLine($"The pizza selected is {PizzaChoice.Name}" + 
+          " with the following components: \n");
+          Console.WriteLine($"Size: {PizzaChoice.PizzaSize.Name}"); 
+          Console.WriteLine($"Crust: {PizzaChoice.PizzaCrust.Name}"); 
+          foreach (var ToppingChoice in PizzaChoice.PizzaTopping) 
+          {
+            Console.WriteLine($"Topping: {ToppingChoice.Name}"); 
+          }
+          Console.WriteLine("--------------------------------"); 
+          Console.WriteLine($"The cost of the pizza you selected is: {PizzaChoice.Price}"); 
+          Console.WriteLine($"The quantity of pizzas you selected is: {PizzaChoice.Quantity} \n"); 
+      }
       
-      // Console.WriteLine("The total cost for this order is: " + totalCost); 
+      var totalQuantity = LastOrder.PizzaList.Sum( q => q.Quantity); 
+      Console.WriteLine("The total quantity is: " + totalQuantity); 
+
+      var totalCost = (from pizza in LastOrder.PizzaList
+                      select pizza.Quantity*pizza.Price).Sum();
+      
+      Console.WriteLine("The total cost for this order is: " + totalCost); 
     }
 
     public User ValidateUser()
@@ -236,6 +246,10 @@ namespace PizzaBox.Client.Sessions
       foreach (var item in _db.CrustDefinition.ToList())
       {
         Console.WriteLine($"The crust is: {item}");
+      }
+      foreach (var item in _db.ToppingDefinition.ToList())
+      {
+        Console.WriteLine($"The topping is: {item}");
       }
     }
 

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaBox.Data.MigrationHistory
 {
-    public partial class fixOrderPizzaFKNames : Migration
+    public partial class firstmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,100 +122,112 @@ namespace PizzaBox.Data.MigrationHistory
                 {
                     OrderID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    PizzaID = table.Column<int>(nullable: false),
-                    UserID = table.Column<int>(nullable: false),
-                    LocationID = table.Column<int>(nullable: false),
+                    UserInfoUserID = table.Column<int>(nullable: true),
+                    LocationIdentifierLocationID = table.Column<int>(nullable: true),
                     OrderDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderList", x => x.OrderID);
                     table.ForeignKey(
-                        name: "FK_OrderList_LocationList_LocationID",
-                        column: x => x.LocationID,
+                        name: "FK_OrderList_LocationList_LocationIdentifierLocationID",
+                        column: x => x.LocationIdentifierLocationID,
                         principalTable: "LocationList",
                         principalColumn: "LocationID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_OrderList_UserList_UserID",
-                        column: x => x.UserID,
+                        name: "FK_OrderList_UserList_UserInfoUserID",
+                        column: x => x.UserInfoUserID,
                         principalTable: "UserList",
                         principalColumn: "UserID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "PizzaList",
                 columns: table => new
                 {
-                    PizzaID = table.Column<int>(nullable: false),
+                    PizzaID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
-                    SizeID = table.Column<int>(nullable: false),
-                    ToppingID = table.Column<int>(nullable: false),
-                    CrustID = table.Column<int>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false)
+                    PizzaSizeSizeID = table.Column<int>(nullable: true),
+                    PizzaCrustCrustID = table.Column<int>(nullable: true),
+                    Quantity = table.Column<int>(nullable: false),
+                    OrderEntityOrderID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PizzaList", x => x.PizzaID);
                     table.ForeignKey(
-                        name: "FK_PizzaList_CrustList_CrustID",
-                        column: x => x.CrustID,
-                        principalTable: "CrustList",
-                        principalColumn: "CrustID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PizzaList_OrderList_PizzaID",
-                        column: x => x.PizzaID,
+                        name: "FK_PizzaList_OrderList_OrderEntityOrderID",
+                        column: x => x.OrderEntityOrderID,
                         principalTable: "OrderList",
                         principalColumn: "OrderID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PizzaList_SizeList_SizeID",
-                        column: x => x.SizeID,
+                        name: "FK_PizzaList_CrustList_PizzaCrustCrustID",
+                        column: x => x.PizzaCrustCrustID,
+                        principalTable: "CrustList",
+                        principalColumn: "CrustID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PizzaList_SizeList_PizzaSizeSizeID",
+                        column: x => x.PizzaSizeSizeID,
                         principalTable: "SizeList",
                         principalColumn: "SizeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ToppingList",
                 columns: table => new
                 {
-                    ToppingID = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    ToppingID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    PizzaEntityPizzaID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ToppingList", x => x.ToppingID);
                     table.ForeignKey(
-                        name: "FK_ToppingList_PizzaList_ToppingID",
-                        column: x => x.ToppingID,
+                        name: "FK_ToppingList_PizzaList_PizzaEntityPizzaID",
+                        column: x => x.PizzaEntityPizzaID,
                         principalTable: "PizzaList",
                         principalColumn: "PizzaID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderList_LocationID",
+                name: "IX_OrderList_LocationIdentifierLocationID",
                 table: "OrderList",
-                column: "LocationID");
+                column: "LocationIdentifierLocationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderList_UserID",
+                name: "IX_OrderList_UserInfoUserID",
                 table: "OrderList",
-                column: "UserID");
+                column: "UserInfoUserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaList_CrustID",
+                name: "IX_PizzaList_OrderEntityOrderID",
                 table: "PizzaList",
-                column: "CrustID");
+                column: "OrderEntityOrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaList_SizeID",
+                name: "IX_PizzaList_PizzaCrustCrustID",
                 table: "PizzaList",
-                column: "SizeID");
+                column: "PizzaCrustCrustID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PizzaList_PizzaSizeSizeID",
+                table: "PizzaList",
+                column: "PizzaSizeSizeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ToppingList_PizzaEntityPizzaID",
+                table: "ToppingList",
+                column: "PizzaEntityPizzaID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -239,10 +251,10 @@ namespace PizzaBox.Data.MigrationHistory
                 name: "PizzaList");
 
             migrationBuilder.DropTable(
-                name: "CrustList");
+                name: "OrderList");
 
             migrationBuilder.DropTable(
-                name: "OrderList");
+                name: "CrustList");
 
             migrationBuilder.DropTable(
                 name: "SizeList");

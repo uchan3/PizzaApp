@@ -46,6 +46,8 @@ namespace PizzaBox.Data
         builder.Entity<StorePizzaDefinition>().HasKey( sp => sp.StorePizzaDefID); 
 
         builder.Entity<OrderEntity>().HasKey( o => o.OrderID); 
+
+        //builder.Entity<OrderEntity>().HasMany( o => o.PizzaList).;
         builder.Entity<PizzaEntity>().HasKey( p => p.PizzaID); 
         builder.Entity<Size>().HasKey( s => s.SizeID); 
         builder.Entity<Crust>().HasKey( c => c.CrustID); 

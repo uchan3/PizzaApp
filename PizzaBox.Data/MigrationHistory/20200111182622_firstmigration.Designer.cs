@@ -10,8 +10,8 @@ using PizzaBox.Data;
 namespace PizzaBox.Data.MigrationHistory
 {
     [DbContext(typeof(PizzaBoxDBContext))]
-    [Migration("20200106200359_fixOrderPizzaFKNames")]
-    partial class fixOrderPizzaFKNames
+    [Migration("20200111182622_firstmigration")]
+    partial class firstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,25 +23,29 @@ namespace PizzaBox.Data.MigrationHistory
 
             modelBuilder.Entity("Pizza.Data.PizzaEntity", b =>
                 {
-                    b.Property<int>("PizzaID");
-
-                    b.Property<int>("CrustID");
+                    b.Property<int>("PizzaID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
+
+                    b.Property<int?>("OrderEntityOrderID");
+
+                    b.Property<int?>("PizzaCrustCrustID");
+
+                    b.Property<int?>("PizzaSizeSizeID");
 
                     b.Property<decimal>("Price");
 
                     b.Property<int>("Quantity");
 
-                    b.Property<int>("SizeID");
-
-                    b.Property<int>("ToppingID");
-
                     b.HasKey("PizzaID");
 
-                    b.HasIndex("CrustID");
+                    b.HasIndex("OrderEntityOrderID");
 
-                    b.HasIndex("SizeID");
+                    b.HasIndex("PizzaCrustCrustID");
+
+                    b.HasIndex("PizzaSizeSizeID");
 
                     b.ToTable("PizzaList");
                 });
@@ -52,19 +56,17 @@ namespace PizzaBox.Data.MigrationHistory
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LocationID");
+                    b.Property<int?>("LocationIdentifierLocationID");
 
                     b.Property<DateTime>("OrderDate");
 
-                    b.Property<int>("PizzaID");
-
-                    b.Property<int>("UserID");
+                    b.Property<int?>("UserInfoUserID");
 
                     b.HasKey("OrderID");
 
-                    b.HasIndex("LocationID");
+                    b.HasIndex("LocationIdentifierLocationID");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserInfoUserID");
 
                     b.ToTable("OrderList");
                 });
@@ -138,11 +140,17 @@ namespace PizzaBox.Data.MigrationHistory
 
             modelBuilder.Entity("PizzaBox.Domain.Ingredients.Topping", b =>
                 {
-                    b.Property<int>("ToppingID");
+                    b.Property<int>("ToppingID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
+                    b.Property<int?>("PizzaEntityPizzaID");
+
                     b.HasKey("ToppingID");
+
+                    b.HasIndex("PizzaEntityPizzaID");
 
                     b.ToTable("ToppingList");
                 });
@@ -194,41 +202,35 @@ namespace PizzaBox.Data.MigrationHistory
 
             modelBuilder.Entity("Pizza.Data.PizzaEntity", b =>
                 {
-                    b.HasOne("PizzaBox.Domain.Ingredients.Crust", "PizzaCrust")
-                        .WithMany()
-                        .HasForeignKey("CrustID")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("PizzaBox.Data.OrderEntity")
                         .WithMany("PizzaList")
-                        .HasForeignKey("PizzaID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("OrderEntityOrderID");
+
+                    b.HasOne("PizzaBox.Domain.Ingredients.Crust", "PizzaCrust")
+                        .WithMany()
+                        .HasForeignKey("PizzaCrustCrustID");
 
                     b.HasOne("PizzaBox.Domain.Ingredients.Size", "PizzaSize")
                         .WithMany()
-                        .HasForeignKey("SizeID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PizzaSizeSizeID");
                 });
 
             modelBuilder.Entity("PizzaBox.Data.OrderEntity", b =>
                 {
                     b.HasOne("PizzaBox.Domain.Models.Location", "LocationIdentifier")
                         .WithMany()
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("LocationIdentifierLocationID");
 
                     b.HasOne("PizzaBox.Domain.Models.User", "UserInfo")
                         .WithMany()
-                        .HasForeignKey("UserID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserInfoUserID");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Ingredients.Topping", b =>
                 {
                     b.HasOne("Pizza.Data.PizzaEntity")
                         .WithMany("PizzaTopping")
-                        .HasForeignKey("ToppingID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PizzaEntityPizzaID");
                 });
 #pragma warning restore 612, 618
         }

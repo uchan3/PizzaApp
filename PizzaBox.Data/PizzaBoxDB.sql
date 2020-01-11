@@ -31,9 +31,9 @@ values ('Sausage'),
 ('Pepperoni'),
 ('Ham');
 
-insert into dbo.UserList("UserID", "FirstName", "LastName")
-values ('1', 'John', 'Smith'),
-('2', 'Joseph', 'Cheung');
+insert into dbo.UserList("FirstName", "LastName")
+values ('John', 'Smith'),
+('Joseph', 'Cheung');
 
 insert into dbo.LocationList("Street", "City", "State")
 values ('1001 S. Center St.', 'Arlington', 'Texas'), 
