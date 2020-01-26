@@ -1,0 +1,46 @@
+@model PizzaBox.MVCClient.Models.OrderViewModel 
+
+<h1>Let's list the available choices for placing order!</h1>
+
+<form action="/Order/PlaceOrder" method="post">
+
+<h2>View the list of locations.</h2>
+<select asp-for="LocationStreet">
+  @foreach (var Location in Model.LocationList)
+  {
+      <option label = "@Location.Street" value="@Location.Street"></option>
+  }
+</select>
+
+<h2>View the available pizza types.</h2>
+
+<select>
+  @foreach (var PizzaType in Model.PizzaTypeList)
+  {
+      <option label="@PizzaType.Name" value="@PizzaType" ></option>
+  }
+</select>
+
+<h2>View the available crust types.</h2>
+<select>
+  @foreach (var Crust in Model.CrustList)
+  {
+      <option label="@Crust.Name" value="@Crust"></option>
+  }
+</select>
+
+<h2>View the available sizes.</h2>
+<select>
+  @foreach (var Size in Model.SizeList)
+  {
+      <option label="@Size.Name" value="@Size"></option>
+  }
+</select>
+
+<h2>Choose the toppings.</h2>
+  @foreach (var Topping in Model.ToppingList)
+  {
+      <label><input type="checkbox" value="@Topping">@Topping.Name</label>
+  }
+<button type="submit">Submit the order.</button>
+</form>

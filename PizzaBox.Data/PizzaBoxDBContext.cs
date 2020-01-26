@@ -1,7 +1,5 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json; 
 using Pizza.Data;
 using PizzaBox.Domain.Ingredients;
 using PizzaBox.Domain.Models;

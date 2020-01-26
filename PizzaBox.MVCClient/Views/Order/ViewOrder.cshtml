@@ -1,0 +1,17 @@
+@model PizzaBox.Data.OrderEntity
+
+<h1>Let's view the order!</h1>
+<p>Note: Testing to view the last order</p>
+
+<h2>This is the primary information based on the order:</h2>
+<h3>Customer Information: @Model.UserInfo.FirstName</h3>
+<h3>Location: @Model.LocationIdentifier.Street</h3>
+<h3>Date: @Model.OrderDate</h3>
+
+<!--List the pizza names-->
+@foreach (var pizza in Model.PizzaList)
+{
+    <h4>Pizza Type: @pizza.Name</h4>
+    <h4>Pizza Crust: @pizza.PizzaCrust.Name</h4>
+    <h4>Pizza Size: @pizza.PizzaSize.Name</h4>
+}
