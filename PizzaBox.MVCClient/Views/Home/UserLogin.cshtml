@@ -1,0 +1,21 @@
+@model PizzaBox.Domain.Models.User
+
+<h1>Welcome. Please enter first and last name to login.</h1>
+
+<form action="/Home/Login" method="post">
+
+  <label>User ID</label>
+  <input type="number" asp-for="UserID">
+  
+  <label>First Name</label>
+  <input type="text" asp-for="FirstName">
+
+  <label>Last Name</label>
+  <input type="text" asp-for="LastName">
+
+  <button type="submit">Login</button>
+</form>
+
+<h1>Don't have an account with us? Please click here to register.</h1>
+
+

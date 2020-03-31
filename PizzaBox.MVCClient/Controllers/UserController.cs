@@ -4,7 +4,8 @@ namespace PizzaBox.MVCClient.Controllers
 {
     public class UserController : Controller
     {
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult UserOptions()
         {
             return View();
         }

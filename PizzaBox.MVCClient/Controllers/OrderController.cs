@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PizzaBox.Data;
+using PizzaBox.Domain.Ingredients;
+using PizzaBox.Domain.Models;
 using PizzaBox.MVCClient.Models;
 
 namespace PizzaBox.MVCClient.Controllers
@@ -15,11 +18,25 @@ namespace PizzaBox.MVCClient.Controllers
     public IActionResult PlaceOrder() 
     {
       OrderViewModel orderForm = new OrderViewModel(); 
-      orderForm.LocationList = _db.LocationList.ToList(); 
-      orderForm.PizzaTypeList = _db.PizzaDefinition.ToList(); 
-      orderForm.CrustList = _db.CrustDefinition.ToList(); 
-      orderForm.SizeList = _db.SizeDefinition.ToList(); 
-      orderForm.ToppingList = _db.ToppingDefinition.ToList(); 
+      //Test data before utilizing database
+      orderForm.LocationList.Add( 
+        new Location {LocationID=1, Street = "1234 North St", City = "Dallas", State="TX"}
+      );
+      orderForm.LocationList.Add(
+        new Location {LocationID=2, Street = "5678 South Drive", City = "Denver", State="CO"}
+      );
+
+      // orderForm.PizzaTypeList = _db.PizzaDefinition.ToList(); 
+      // orderForm.CrustList = _db.CrustDefinition.ToList(); 
+      // orderForm.SizeList = _db.SizeDefinition.ToList(); 
+      orderForm.ToppingList.AddRange(
+        new List<ToppingDefinition>
+        {
+          new ToppingDefinition("Ham") { ToppingDefID = 1, Name = "Ham"}, 
+          new ToppingDefinition("Pepperoni") {ToppingDefID = 2, Name = "Pepperoni"}, 
+          new ToppingDefinition("Sausage") {ToppingDefID = 3, Name = "Sausage"}
+        }    
+      );
 
       return View(orderForm); 
     }
