@@ -31,8 +31,15 @@ namespace PizzaBox.MVCClient
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //Had to use the following to configure tempdata. 
+            services.Configure<CookieTempDataProviderOptions>(options =>
+            {
+              options.Cookie.IsEssential = true;
+            }); //This enables tempdata provider when tracking is disabled. (TempData is considered nonessential.)
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            //services.AddSession(); //Debugging TempData, but something to use in future?!
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +59,8 @@ namespace PizzaBox.MVCClient
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            //app.UseSession(); //Debugging TempData. Something to use in future?!
 
             app.UseMvc(routes =>
             {

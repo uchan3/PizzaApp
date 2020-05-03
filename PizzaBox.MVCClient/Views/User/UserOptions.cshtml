@@ -1,5 +1,35 @@
-<h2>Welcome User. Here are the following options.</h2>
+@{ 
+  //This checks if tempdata contains key value. If yes, displays user options. Else, displays error message.
+  if(TempData["UserInfo"] !=  null)
+  {
+    string customerName;
+    customerName = ViewData["UserInfo"] as string;
+    //customerName = TempData["UserInfo"].ToString();
+    <header>
+      <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+          <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <ul class="navbar-nav flex-grow-1">
+              <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      </header>
+
+<h2>Welcome @customerName. Here are the following options.</h2>
 
 <h3>Place an order.</h3>
 <h3>View all past orders.</h3>
 <h3>Update your profile information.</h3>
+
+  } 
+  else
+  {
+    string errorMessage;
+    errorMessage = ViewData["Warning"] as string;
+    <h2 style="color: red">@errorMessage</h2>
+  }
+}

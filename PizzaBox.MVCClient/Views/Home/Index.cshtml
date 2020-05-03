@@ -2,11 +2,35 @@
     ViewData["Title"] = "Home Page";
 }
 
+<!--Define styling for the image in view-->
+<head>
+  <style>
+    img {
+      max-width: 50%;
+      height: auto;
+    }
+  </style>
+</head>
+
 <div class="text-center">
     <h1 class="display-4">Welcome to the PizzaBox Store.</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<div>
-  <img src="../Images/Pizza_Image1.jpg">
+<div id="Pizza Slideshow" class="text-center" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../Images/Pizza_Image1.jpg">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Photo Credit: Photo by Chad Montano on Unsplash</h5>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="../Images/Pizza_Image2.jpg">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Photo Credit: https://www.foodiecrush.com/truffled-mushroom-pizza/ </h5>
+      </div>
+    </div>
+  </div>
 </div>
+
+
