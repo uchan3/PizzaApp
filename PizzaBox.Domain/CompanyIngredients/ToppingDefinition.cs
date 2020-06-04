@@ -15,5 +15,10 @@ namespace PizzaBox.Domain.Ingredients
     {
       return (this.Name + " Topping");
     }
+
+    public static implicit operator Topping(ToppingDefinition toppingDef)
+    {
+      return new Topping(toppingDef.Name); 
+    }
   }
 }

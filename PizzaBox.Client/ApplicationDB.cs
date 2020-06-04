@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Pizza.Data;
 using PizzaBox.Data;
 using PizzaBox.Domain.Ingredients;
 using PizzaBox.Domain.Models;

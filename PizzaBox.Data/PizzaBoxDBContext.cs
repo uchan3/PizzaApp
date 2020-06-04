@@ -1,6 +1,5 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using Pizza.Data;
 using PizzaBox.Domain.Ingredients;
 using PizzaBox.Domain.Models;
 

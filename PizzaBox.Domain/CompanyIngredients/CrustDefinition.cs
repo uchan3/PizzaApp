@@ -15,5 +15,10 @@ namespace PizzaBox.Domain.Ingredients
     {
       return (this.Name + " Crust");
     }
+
+    public static implicit operator Crust(CrustDefinition crustDef)
+    {
+      return new Crust(crustDef.Name);
+    }
   }
 }

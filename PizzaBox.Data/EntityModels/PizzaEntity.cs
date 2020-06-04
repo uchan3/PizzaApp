@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using PizzaBox.Domain.Ingredients;
 
-namespace Pizza.Data
+namespace PizzaBox.Data
 {
   public class PizzaEntity: APizza
   {

@@ -15,5 +15,10 @@ namespace PizzaBox.Domain.Ingredients
     {
       return (this.Name + " Size");
     }
+
+    public static implicit operator Size(SizeDefinition sizeDef)
+    {
+      return new Size(sizeDef.Name); 
+    }
   }
 }

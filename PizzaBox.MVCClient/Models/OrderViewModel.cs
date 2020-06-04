@@ -22,7 +22,11 @@ namespace PizzaBox.MVCClient.Models
 
       public OrderViewModel()
       {
+        //Used to initialize the lists. 
         this.LocationList = new List<Location>(); 
+        this.PizzaTypeList = new List<StorePizzaDefinition>();
+        this.CrustList = new List<CrustDefinition>();
+        this.SizeList = new List<SizeDefinition>();
         this.ToppingList = new List<ToppingDefinition>(); 
       }
     }
